@@ -15,9 +15,9 @@
                            |  TypedArray pointer  |
                            |  TypedArray pointer  |
                            |  ...                 |
-                           |  (number << 1) + 1   |
-                           |  (number << 1) + 1   |
-                           |  (number << 1) + 1   |
+                           |  (number << 1) | 1   |
+                           |  (number << 1) | 1   |
+                           |  (number << 1) | 1   |
                            |  ...                 |
                            ------------------------
                            |  TypedArray          |
