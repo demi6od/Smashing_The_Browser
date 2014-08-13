@@ -19,4 +19,4 @@ Part 3: IE 11 0day Exploit Development
 
 After taking one of my IE 11 UAF vulnerabilities from StateFuzzer, I will share the whole exploit developing experience from the vulnerability trigger to arbitrary code execution, together with all related technologies and skills (Demo).
 
-At last, I will bring a special, interesting and undisclosed IE 11 0day (not affected by isolated heap and protected free) to HITCON as gift and challenge:)
+At last, I will bring a special, interesting and undisclosed IE 11 0day (not affected by isolated heap and protected free).
