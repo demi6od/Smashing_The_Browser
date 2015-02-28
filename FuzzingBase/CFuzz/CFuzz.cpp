@@ -92,6 +92,6 @@ int _tmain(int argc, _TCHAR* argv[]) {
 
     pFuzz->Run(appPathW.c_str(), (LPTSTR)cmdW.c_str());
 
-	return 0;
+    return 0;
 }
 
