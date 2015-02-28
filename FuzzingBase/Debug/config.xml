@@ -1,0 +1,8 @@
+<appPath>E:\chrome.exe</appPath>
+<startArg>--no-sandbox</startArg>
+<serverPath>/fuzzer</serverPath>
+<symPath>E:\symbols\</symPath>
+<timeout>30</timeout> <!-- minite -->
+<ip>192.168.153.145</ip>
+<port>8882</port>
+<id>01</id>

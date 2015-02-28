@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CFuzz", "CFuzz\CFuzz.vcxproj", "{60E59F8D-F801-4D3F-AA20-C229B4E2F672}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60E59F8D-F801-4D3F-AA20-C229B4E2F672}.Debug|Win32.ActiveCfg = Debug|Win32
+		{60E59F8D-F801-4D3F-AA20-C229B4E2F672}.Debug|Win32.Build.0 = Debug|Win32
+		{60E59F8D-F801-4D3F-AA20-C229B4E2F672}.Release|Win32.ActiveCfg = Release|Win32
+		{60E59F8D-F801-4D3F-AA20-C229B4E2F672}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

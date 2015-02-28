@@ -1,0 +1,24 @@
+﻿Build started 2015/2/13 16:18:00.
+     1>Project "E:\GitHub\FuzzingFramework\CFuzz\CFuzz\CFuzz.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CDebugEventHandler.cpp
+         CDebugEventHandler.cpp
+     1>c:\program files\microsoft sdks\windows\v7.1\include\sal_supp.h(57): warning C4005: '__useHeader' : macro redefinition
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2886) : see previous definition of '__useHeader'
+     1>c:\program files\microsoft sdks\windows\v7.1\include\specstrings_supp.h(77): warning C4005: '__on_failure' : macro redefinition
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\sal.h(2896) : see previous definition of '__on_failure'
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitHub\FuzzingFramework\CFuzz\Debug\CFuzz.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\GitHub\FuzzingFramework\CFuzz\Debug\CFuzz.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitHub\FuzzingFramework\CFuzz\Debug\CFuzz.lib" /MACHINE:X86 Debug\CCrash.obj
+         Debug\CDebugEventHandler.obj
+         Debug\CDebugger.obj
+         Debug\CDisassembler.obj
+         Debug\CFuzz.obj
+         Debug\CSymbols.obj
+         Debug\pugixml.obj
+         Debug\stdafx.obj
+         CFuzz.vcxproj -> E:\GitHub\FuzzingFramework\CFuzz\Debug\CFuzz.exe
+     1>Done Building Project "E:\GitHub\FuzzingFramework\CFuzz\CFuzz\CFuzz.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.04
