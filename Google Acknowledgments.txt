@@ -1,3 +1,6 @@
+Google Hall of Fame: Q4 2014, Q1 2015
+http://www.google.com/about/appsecurity/hall-of-fame/reward/
+
 October 7, 2014
 http://googlechromereleases.blogspot.com/2014/10/stable-channel-update.html
 CVE-2014-3190
@@ -6,3 +9,7 @@ November 18, 2014
 http://googlechromereleases.blogspot.com/2014/11/stable-channel-update_18.html
 CVE-2014-7906
 CVE-2014-7907
+
+March 3, 2015
+http://googlechromereleases.blogspot.com/2015/03/stable-channel-update.html
+CVE-2015-1219
