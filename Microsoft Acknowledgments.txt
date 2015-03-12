@@ -3,6 +3,7 @@ MS14-035
 https://technet.microsoft.com/en-us/library/security/ms14-035
 CVE-2014-1769
 CVE-2014-1773
+CVE-2014-1784
 CVE-2014-2764
 
 July 8, 2014
