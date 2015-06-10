@@ -30,3 +30,8 @@ https://technet.microsoft.com/en-us/library/security/dn903755.aspx
 February 2015
 CVE-2015-0026
 CVE-2015-0030
+
+June 2015
+CVE-2015-1740
+CVE-2015-1741
+CVE-2015-1742
